@@ -17,7 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,8 +76,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     validator: (String? text) {
-                      if(text!.isEmpty) {
+                      if (text!.isEmpty) {
                         return 'Your Email cannot be empty!';
+                      } else if (!text.contains('@') || !text.contains('.')) {
+                        return 'Your email is incorrect!';
                       } else {
                         return null;
                       }
@@ -130,10 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: Colors.black,
                     ),
                     onPressed: () {
-
-                      formKey.currentState!.validate();
-                      // Navigator.of(context).push(
-                      //     MaterialPageRoute(builder: (context) => HomeScreen()));
+                      if(formKey.currentState!.validate()) {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                                HomeScreen()));
+                      }
                     },
                     child: Text('Sign In'),
                   ),
